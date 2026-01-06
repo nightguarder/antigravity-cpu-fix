@@ -25,11 +25,18 @@ polyfill = b"""{
   }
   const _si = globalThis.setInterval;
   globalThis.setInterval = (fn, ms, ...args) => {
-    if (typeof ms === 'number' && ms < 1000) ms = 1200;
+    if (typeof ms === 'number' && ms < 1000) ms = 1000;
     return _si(fn, ms, ...args);
   };
-  globalThis.queueMicrotask = (fn) => setTimeout(fn, 1200);
-  globalThis.requestAnimationFrame = (fn) => setTimeout(fn, 1200);
+  globalThis.queueMicrotask = (fn) => setTimeout(fn, 0);
+  const _si_raf = globalThis.requestAnimationFrame;
+  globalThis.requestAnimationFrame = (fn) => {
+    const ae = document.activeElement;
+    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.getAttribute('contenteditable') === 'true')) {
+        return setTimeout(fn, 30);
+    }
+    return setTimeout(fn, 1200);
+  };
 }
 const __slowMo = (fn) => setTimeout(fn, 1200);
 """
