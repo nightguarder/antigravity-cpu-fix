@@ -51,7 +51,6 @@ doctor: ##H@@	Check paths and health (Dry Run)
 	@echo "--- Checks ---"
 	@if [ -d "$(TARGET_DIR)" ]; then \
 		echo "✅ Target Dir found: $(TARGET_DIR)"; \
-		# Check main.js \
 		if [ -f "$(TARGET_DIR)/resources/app/out/jetskiAgent/main.js" ]; then \
 			echo "✅ main.js found"; \
 			if [ -w "$(TARGET_DIR)/resources/app/out/jetskiAgent/main.js" ]; then \
@@ -62,7 +61,6 @@ doctor: ##H@@	Check paths and health (Dry Run)
 		else \
 			echo "❌ main.js NOT found in resources/app/out/jetskiAgent/"; \
 		fi; \
-		# Check product.json \
 		if [ -f "$(TARGET_DIR)/resources/app/product.json" ]; then \
 			echo "✅ product.json found"; \
 			if [ -w "$(TARGET_DIR)/resources/app/product.json" ]; then \
